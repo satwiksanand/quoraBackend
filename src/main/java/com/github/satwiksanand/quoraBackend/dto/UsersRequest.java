@@ -8,7 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsersRequest {
-    private String name;
-    private String description;
-    private Long id;
+    private String userName;
+    private String userEmail;
+    private String profileImage;
+    private String userDescription;
 }

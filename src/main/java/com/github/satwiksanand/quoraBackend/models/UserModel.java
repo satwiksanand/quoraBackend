@@ -22,6 +22,9 @@ public class UserModel {
     @Column(nullable = false)
     private String userName;
 
+    @Column(nullable = false)
+    private String userEmail;
+
     private String profileImage;
 
     private String userDescription;
