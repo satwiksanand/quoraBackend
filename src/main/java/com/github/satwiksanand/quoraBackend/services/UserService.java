@@ -4,20 +4,21 @@ import com.github.satwiksanand.quoraBackend.dto.UsersRequest;
 import com.github.satwiksanand.quoraBackend.exception.IllegalUserArgumentException;
 import com.github.satwiksanand.quoraBackend.exception.UserAlreadyExistsException;
 import com.github.satwiksanand.quoraBackend.exception.UserNotFoundException;
-import com.github.satwiksanand.quoraBackend.models.UserModel;
+import com.github.satwiksanand.quoraBackend.models.Users;
 import com.github.satwiksanand.quoraBackend.repositories.UserRepository;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ResponseEntity<?> createUser(UsersRequest userDto) throws Exception {
         if(userDto.getUserEmail() == null || userDto.getUserEmail().isBlank()){
@@ -26,10 +27,11 @@ public class UserService {
         if(userRepository.existsByUserEmail(userDto.getUserEmail())){
             throw new UserAlreadyExistsException("Email: " + userDto.getUserEmail() + " is already in use!");
         }
-        UserModel newUser = UserModel.builder().userEmail(userDto.getUserEmail())
+        Users newUser = Users.builder().userEmail(userDto.getUserEmail())
                 .userName(userDto.getUserName())
                 .profileImage(userDto.getProfileImage())
                 .userDescription(userDto.getUserDescription())
+                .userPassword(passwordEncoder.encode(userDto.getUserPassword()))
                 .build();
         userRepository.save(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);

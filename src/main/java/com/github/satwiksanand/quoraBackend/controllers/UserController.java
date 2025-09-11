@@ -1,7 +1,6 @@
 package com.github.satwiksanand.quoraBackend.controllers;
 
 import com.github.satwiksanand.quoraBackend.dto.UsersRequest;
-import com.github.satwiksanand.quoraBackend.models.UserModel;
 import com.github.satwiksanand.quoraBackend.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users/")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -27,7 +26,7 @@ public class UserController {
         return userService.createUser(newUser);
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable("userId") UUID userId) throws Exception{
         return userService.deleteUser(userId);
     }

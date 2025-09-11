@@ -12,4 +12,5 @@ public class UsersRequest {
     private String userEmail;
     private String profileImage;
     private String userDescription;
+    private String userPassword;
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserModel {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,6 +24,9 @@ public class UserModel {
 
     @Column(nullable = false)
     private String userEmail;
+
+    @Column(nullable = false)
+    private String userPassword;
 
     private String profileImage;
 
@@ -36,9 +39,9 @@ public class UserModel {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    private List<UserModel> followers;
+    private List<Users> followers;
 
     // Users this user is following
     @ManyToMany(mappedBy = "followers")
-    private List<UserModel> following;
+    private List<Users> following;
 }
