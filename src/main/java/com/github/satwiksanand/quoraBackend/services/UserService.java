@@ -3,12 +3,16 @@ package com.github.satwiksanand.quoraBackend.services;
 import com.github.satwiksanand.quoraBackend.dto.UsersRequest;
 import com.github.satwiksanand.quoraBackend.exception.IllegalUserArgumentException;
 import com.github.satwiksanand.quoraBackend.exception.UserAlreadyExistsException;
+import com.github.satwiksanand.quoraBackend.exception.UserNotFoundException;
 import com.github.satwiksanand.quoraBackend.models.UserModel;
 import com.github.satwiksanand.quoraBackend.repositories.UserRepository;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,5 +33,13 @@ public class UserService {
                 .build();
         userRepository.save(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    }
+
+    public ResponseEntity<Void> deleteUser(UUID userId) throws Exception{
+        if(!userRepository.existsById(userId)){
+            throw new UserNotFoundException("user not found");
+        }
+        userRepository.deleteById(userId);
+        return ResponseEntity.noContent().build();
     }
 }

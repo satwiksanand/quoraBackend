@@ -3,6 +3,7 @@ package com.github.satwiksanand.quoraBackend.exceptionHandler;
 import com.github.satwiksanand.quoraBackend.dto.ErrorMessage;
 import com.github.satwiksanand.quoraBackend.exception.IllegalUserArgumentException;
 import com.github.satwiksanand.quoraBackend.exception.UserAlreadyExistsException;
+import com.github.satwiksanand.quoraBackend.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,5 +39,15 @@ public class GlobalExceptionHandler {
                 .statusCode(HttpStatus.SERVICE_UNAVAILABLE.value())
                 .build();
         return new ResponseEntity<>(err, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleUserNotFoundException(UserNotFoundException ex){
+        ErrorMessage err = ErrorMessage.builder()
+                .message(ex.getMessage())
+                .errorMessage("Entity doesn't exist!")
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .build();
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
     }
 }
