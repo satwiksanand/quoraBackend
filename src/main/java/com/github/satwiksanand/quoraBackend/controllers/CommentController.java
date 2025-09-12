@@ -1,13 +1,13 @@
 package com.github.satwiksanand.quoraBackend.controllers;
 
+import com.github.satwiksanand.quoraBackend.dto.CommentResponseDto;
 import com.github.satwiksanand.quoraBackend.dto.CommentsDto;
-import com.github.satwiksanand.quoraBackend.models.Comments;
 import com.github.satwiksanand.quoraBackend.services.CommentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/comment")
@@ -19,7 +19,12 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Comments> createComment(@RequestBody CommentsDto comment) throws Exception{
+    public ResponseEntity<CommentResponseDto> createComment(@RequestBody CommentsDto comment) throws Exception{
         return commentService.createComment(comment);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<CommentResponseDto>> getCommentByPostId(@PathVariable UUID postId) throws Exception{
+        return commentService.getCommentByPostId(postId);
     }
 }

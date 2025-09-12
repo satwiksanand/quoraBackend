@@ -28,7 +28,7 @@ public class Comments {
     @JoinColumn
     private Users commentedBy;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Posts post;
 
@@ -38,8 +38,10 @@ public class Comments {
     private String commentContent;
 
     @CreatedDate
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
 
     @LastModifiedDate
+    @Temporal(TemporalType.DATE)
     private Date modifiedAt;
 }
