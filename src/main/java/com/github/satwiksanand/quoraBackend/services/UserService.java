@@ -3,7 +3,7 @@ package com.github.satwiksanand.quoraBackend.services;
 import com.github.satwiksanand.quoraBackend.dto.UsersRequest;
 import com.github.satwiksanand.quoraBackend.exception.IllegalUserArgumentException;
 import com.github.satwiksanand.quoraBackend.exception.UserAlreadyExistsException;
-import com.github.satwiksanand.quoraBackend.exception.UserNotFoundException;
+import com.github.satwiksanand.quoraBackend.exception.EntityNotFoundException;
 import com.github.satwiksanand.quoraBackend.models.Users;
 import com.github.satwiksanand.quoraBackend.repositories.UserRepository;
 import lombok.*;
@@ -39,7 +39,7 @@ public class UserService {
 
     public ResponseEntity<Void> deleteUser(UUID userId) throws Exception{
         if(!userRepository.existsById(userId)){
-            throw new UserNotFoundException("user not found");
+            throw new EntityNotFoundException("user not found");
         }
         userRepository.deleteById(userId);
         return ResponseEntity.noContent().build();

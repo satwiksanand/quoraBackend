@@ -1,12 +1,11 @@
 package com.github.satwiksanand.quoraBackend.services;
 
 import com.github.satwiksanand.quoraBackend.dto.PostDto;
-import com.github.satwiksanand.quoraBackend.exception.UserNotFoundException;
+import com.github.satwiksanand.quoraBackend.exception.EntityNotFoundException;
 import com.github.satwiksanand.quoraBackend.models.Posts;
 import com.github.satwiksanand.quoraBackend.models.Users;
 import com.github.satwiksanand.quoraBackend.repositories.PostRepository;
 import com.github.satwiksanand.quoraBackend.repositories.UserRepository;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,6 +36,6 @@ public class PostService {
             postRepository.save(post);
             return new ResponseEntity<>(post, HttpStatus.CREATED);
         }
-        throw new UserNotFoundException("Invalid Request!");
+        throw new EntityNotFoundException("Invalid Request!");
     }
 }
