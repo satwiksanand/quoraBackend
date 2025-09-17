@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -17,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Posts {
+public class Posts  implements Likeable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID postId;
@@ -38,4 +40,23 @@ public class Posts {
 
     @LastModifiedDate
     private Date updatedAt;
+
+    @ManyToMany
+    @Builder.Default
+    private Set<Users> likedBy = new HashSet<>();
+
+    @Override
+    public UUID getId() {
+        return postId;
+    }
+
+    @Override
+    public void addLike(Users user) {
+        likedBy.add(user);
+    }
+
+    @Override
+    public int getLikeCount() {
+        return likedBy.size();
+    }
 }
