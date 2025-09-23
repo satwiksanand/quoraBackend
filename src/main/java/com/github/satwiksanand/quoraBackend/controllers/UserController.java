@@ -1,6 +1,8 @@
 package com.github.satwiksanand.quoraBackend.controllers;
 
 import com.github.satwiksanand.quoraBackend.dto.UsersRequest;
+import com.github.satwiksanand.quoraBackend.dto.UsersUpdateRequestDto;
+import com.github.satwiksanand.quoraBackend.models.Users;
 import com.github.satwiksanand.quoraBackend.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String getDetail(){
-        return "this is the details that you are looking for";
+    @GetMapping("/{userId}")
+    public ResponseEntity<Users> getDetail(@PathVariable("userId") UUID userId) throws Exception{
+        return userService.findUser(userId);
     }
 
     @PostMapping
@@ -29,5 +31,10 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable("userId") UUID userId) throws Exception{
         return userService.deleteUser(userId);
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<Users> updateUser(@PathVariable("userId") UUID userId, @RequestBody UsersUpdateRequestDto userRequest) throws Exception {
+        return userService.updateUser(userId, userRequest);
     }
 }
