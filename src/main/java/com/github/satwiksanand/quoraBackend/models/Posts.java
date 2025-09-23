@@ -24,10 +24,13 @@ public class Posts  implements Likeable{
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID postId;
 
+    @Column(nullable = false)
+    private String postTitle;
+
     @Column(columnDefinition = "TEXT")
     private String postContent;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Users createdBy;
 

@@ -11,9 +11,10 @@ import java.util.UUID;
 @Getter
 @Setter
 public class PostDto {
+    private String postTitle;
     private String postContent;
     private UUID createdBy;
-    private Long postUpvoteCount = 0L;
-    private Long postDownVote = 0L;
-    private Long postViews = 0L;
+    private Long postUpvoteCount;
+    private Long postDownVote;
+    private Long postViews;
 }
